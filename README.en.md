@@ -55,6 +55,13 @@ python -m huimai web --port 8772
 
 All offers live in `data/products-sample.json` as fixed sample prices; no e-commerce API is involved.
 
+Run in Docker (the container uses the default port 8772):
+
+```bash
+docker build -t huimai .
+docker run -p 8772:8772 huimai
+```
+
 ## Command reference
 
 | Command | What it does |
@@ -69,6 +76,46 @@ All offers live in `data/products-sample.json` as fixed sample prices; no e-comm
 | `stats` / `web` | Stats / web |
 
 Global flags: `--mock`, `--json`, `--model`, `--base-url`, `--api-key`, `--db`.
+
+## 🤔 Why not just ask a general LLM
+
+A general model can say "that is a good price". Huimai adds the three things it cannot:
+
+1. **Landed price is computed locally** — item price plus shipping is the real cost, unit price is derived from packs such as "3 packs × 60 tablets", and median, spread and outlier prices are all calculated, so shipping is never forgotten and a quote at sixty percent of the median gets noticed.
+2. **Cheap needs a reason** — outlier prices are flagged with channel risks: near expiry, no invoice, not an official store, slow shipping. The verdict stays inside a fixed set (buy / wait / switch channel / do not buy / no quote) instead of hedging prose.
+3. **The watch list stays local** — quotes and the watch list live in local SQLite; quotes are built-in or entered by hand, no e-commerce API is called, and nothing is ordered for you.
+4. **Works offline** — comparison, unit price and outlier checks are local rules and run without a key; the model only phrases the conclusion more smoothly.
+
+## 🎯 Use cases
+
+- **Comparing before a big purchase**: enter the price and shipping of the same earphones on four platforms, sort by landed price, then ask why the cheapest is cheap.
+- **Seeing a suspiciously low price**: when one seller is half the others, the outlier flag points at near-expiry or unofficial channels, so you decide whether the saving is worth the risk.
+- **Tracking one item**: add it to the watch list and compare again when new quotes arrive, instead of reopening pages.
+
+## 🗺 Roadmap
+
+- **Faster quote entry**: paste several quotes at once and split them into channel, price and shipping.
+- **Price history**: repeated comparisons as a curve, to tell a real drop from a rise-then-fall.
+- **Coupons and tax in the landed price**: include discounts and tax, not just the sticker price.
+- **Price-drop alert**: notify once when a watched item falls below your target.
+- **Comparison export**: write one comparison to a Markdown table for whoever is buying with you.
+
+## ❓ FAQ
+
+**Where do I get an API key?**
+Comparison needs no key; only smoother wording uses a model. It defaults to DeepSeek (`https://api.deepseek.com`) via `LLM_API_KEY`.
+
+**Where is data stored, and does it scrape marketplaces?**
+It does not scrape. Quotes are built in or entered by hand and stored in local SQLite; a model call sends this quote set, not your whole watch list.
+
+**Does it work without a key?**
+Yes. `compare` is local arithmetic: landed price, unit price, outlier flags and the verdict all come out; only the phrasing is less polished.
+
+**How do I switch models?**
+Change `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_KEY`, or override with `--model`.
+
+**Why is the cheapest seller not recommended?**
+Because it was flagged as an outlier (near expiry, no invoice, unofficial). The verdict becomes "switch channel" and recommends the next-cheapest safe seller instead of letting you save a few yuan and regret it.
 
 ## How it works
 
