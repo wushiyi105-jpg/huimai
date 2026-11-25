@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "huimai"
+version = "0.1.0"
+description = "多平台比价、真伪与性价比判断、关注清单"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+[project.scripts]
+huimai = "huimai.cli:main"
+
+[tool.setuptools]
+packages = ["huimai"]
+
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "无线降噪耳机 Pro",
+    "category": "数码",
+    "specs": "1 只",
+    "note": "内置示例报价,不是实时价格",
+    "offers": [
+      {"platform": "京东自营", "price": 899, "shipping": 0, "note": "官方自营,含发票与一年保修"},
+      {"platform": "天猫旗舰店", "price": 879, "shipping": 12, "note": "官方旗舰店,可开发票"},
+      {"platform": "拼多多某店", "price": 449, "shipping": 0, "note": "非官方店,无票"},
+      {"platform": "闲鱼", "price": 650, "shipping": 0, "note": "二手,无票"}
+    ]
+  },
+  {
+    "name": "婴儿纸尿裤 L 码",
+    "category": "母婴",
+    "specs": "3 包 × 60 片",
+    "note": "内置示例报价,不是实时价格",
+    "offers": [
+      {"platform": "京东自营", "price": 219, "shipping": 0, "note": "自营,次日达"},
+      {"platform": "天猫超市", "price": 205, "shipping": 10, "note": "可开发票"},
+      {"platform": "拼多多某店", "price": 158, "shipping": 0, "note": "临期清仓,无票"}
+    ]
+  },
+  {
+    "name": "云南小粒咖啡豆",
+    "category": "食品",
+    "specs": "500g",
+    "note": "内置示例报价,不是实时价格",
+    "offers": [
+      {"platform": "天猫旗舰店", "price": 128, "shipping": 0, "note": "烘焙日期新鲜,可开发票"},
+      {"platform": "京东自营", "price": 139, "shipping": 0, "note": "自营"},
+      {"platform": "拼多多某店", "price": 89, "shipping": 0, "note": "临期,无票"}
+    ]
+  },
+  {
+    "name": "声波电动牙刷",
+    "category": "个护",
+    "specs": "1 支",
+    "note": "内置示例报价,不是实时价格",
+    "offers": [
+      {"platform": "京东自营", "price": 299, "shipping": 0, "note": "自营,两年质保"},
+      {"platform": "天猫旗舰店", "price": 289, "shipping": 8, "note": "官方旗舰店"},
+      {"platform": "抖音商城", "price": 259, "shipping": 0, "note": "直播间价,需确认是否官方"}
+    ]
+  }
+]
