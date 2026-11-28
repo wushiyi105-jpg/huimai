@@ -11,7 +11,7 @@ from .db import Database
 PAGE = """<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>惠买 · 比价购物</title>
+<title>惠买 · 同款到手哪家便宜</title>
 <style>
 :root{--bg:#0f1216;--card:#181d24;--line:#27303a;--text:#e7edf3;--dim:#8d99a6;--accent:#e2603a;--ok:#4fc18a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 "Segoe UI","Microsoft YaHei",sans-serif}
@@ -32,8 +32,73 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;p
 th{color:var(--dim);font-weight:500}.hit{color:var(--ok)}
 .badge{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--dim);margin-left:8px}
 .badge.off{color:var(--accent);border-color:var(--accent)}
+
+:root{--maxw:1000px;--bg:#fcfcf8;--card:#ffffff;--ink:#20243a;--text:#20243a;--dim:#6c7080;--line:#d8dae4;--accent:#3b4a9b;--muted:#6c7080}
+.wrap{max-width:1000px}
+body{background:#fcfcf8;color:#20243a;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+h1{color:#20243a}
+header{max-width:1000px;margin:0 auto}
+input,textarea,select{background:#fff;color:#20243a;border-color:#d8dae4;border-radius:2px}
+button:not(.ghost):not(.tab){background:#3b4a9b;color:#fff;border-radius:2px}
+button.ghost{background:transparent!important;color:#3b4a9b!important;border:1px solid #d8dae4!important}
+h2,h3{color:#3b4a9b}
+pre{background:#fafaf6;color:#20243a;border-color:#d8dae4}
+.item,.card{border-color:#d8dae4;background:#ffffff}
+.k,.empty,.hint{color:#6c7080}
+
+h1{font-size:clamp(31px,5vw,39px);line-height:1.26}
+.prod{display:block;font-size:11px;line-height:1.4;letter-spacing:.18em;font-weight:650;margin-bottom:8px;opacity:.72}
+.lede,.sub{max-width:62ch;line-height:1.75}
+.route{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:16px auto 20px;border:1px solid var(--line);background:var(--line);max-width:var(--maxw)}
+.route span{padding:11px 13px;background:var(--card);font-size:12px;line-height:1.5}
+.route b{display:block;font-size:10px;letter-spacing:.1em;margin-bottom:3px;opacity:.66}
+button{min-height:46px}
+input,select{min-height:44px}
+pre{white-space:pre-wrap}
+@media(max-width:680px){
+  .wrap{padding:20px 16px 56px}
+  .route{grid-template-columns:1fr}
+  h1{font-size:30px!important}
+  .row>div{min-width:100%!important}
+  button{width:100%}
+}
+
+:root{--bg:#fcfcf8;--card:#fff;--line:#d8dae4;--text:#20243a;--dim:#6c7080;--accent:#3b4a9b}
+body{background:#fcfcf8;color:#20243a}
+h1{font-size:38px;line-height:1.25;letter-spacing:-.02em}
+.sub{color:#6c7080;font-size:14px}
+.tabs{display:flex;gap:0;margin:16px 0;border-bottom:1px solid #d8dae4}
+.tab{border:0;border-radius:0;background:transparent;color:#6c7080;padding:10px 18px;border-bottom:3px solid transparent}
+.tab.on{background:transparent;color:#20243a;border-bottom-color:#f0d34f}
+.card{background:#fff;border:1px solid #d8dae4;border-radius:2px;box-shadow:none}
+button,.go{background:#3b4a9b;border-radius:2px;letter-spacing:.03em;color:#fff}
+button:hover,.go:hover{background:#303c80}
+input,select,textarea{background:#fff;border-color:#d4d7e2;border-radius:2px;color:#20243a;font-variant-numeric:tabular-nums}
+input:focus,select:focus,textarea:focus{border-color:#3b4a9b;box-shadow:0 0 0 2px #dfe2f3}
+pre{background:#f8f9fd;border-color:#d8dae4;color:#20243a}
+.item,.offer{border-left:3px solid #f0d34f;background:#fffdf2}
+h3{color:#3b4a9b}
+
+
+/* mobile-32 */
+
+@media(max-width:760px){
+  main{grid-template-columns:1fr!important}
+  aside{border-right:0!important;border-bottom:1px solid #d8dae4;width:auto!important}
+  section{padding:16px!important}
+  .row{flex-wrap:wrap!important}
+  .row>div{min-width:100%!important}
+  h1{font-size:30px!important}
+  .route{grid-template-columns:1fr!important}
+  button{min-height:48px}
+  pre{overflow-x:auto}
+}
+
+/* mobile-height */
+@media(max-width:760px){main{min-height:auto!important}aside{min-height:0!important}}
 </style></head><body><div class="wrap">
-<h1>惠买 · 比价购物<span id="status" class="badge">…</span></h1>
+<h1><span class="prod">惠买</span>同款到手，哪家真便宜 <span id="status" class="badge">…</span></h1>
+  <p class="sub">给在几个渠道对比同款的人：把 SKU、规格、运费、券条件和售后期限拆开，只用已满足的条件计算到手总价，保留报价时间和原链接。</p>
 <div class="sub">内置示例报价,不接电商接口。比的是同一件商品在不同渠道的到手价。</div>
 <div class="tabs">
   <button class="tab on" data-tab="cmp">比价</button>
@@ -41,7 +106,9 @@ th{color:var(--dim);font-weight:500}.hit{color:var(--ok)}
 </div>
 
 <div class="panel on" id="cmp">
-  <div class="card">
+  
+  <div class="route" aria-label="任务步骤"><span><b>01</b>贴各渠道报价</span><span><b>02</b>对齐同款规格</span><span><b>03</b>算到手总价</span></div>
+<div class="card">
     <div class="row"><div><label>商品</label><select id="itemSel"></select></div>
     <div><label>目标价(可留空)</label><input id="target" type="number" min="0" step="1" placeholder="例如 600"></div></div>
     <button class="go" id="btnCompare">算到手价与建议</button>
